@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import joblib
 import pandas as pd
 from pydantic import BaseModel
@@ -7,7 +7,13 @@ pipeline=joblib.load('model/pipeline.joblib')
 encoder= joblib.load('model/encoder.joblib')
 print(pipeline)
 print(encoder)
-app=FastAPI()
+
+
+
+app=FastAPI(
+    title="Seppsis Classification FASTAPI"
+)
+
 
 class SepsisFeatures(BaseModel):
     PRG: int
@@ -19,26 +25,28 @@ class SepsisFeatures(BaseModel):
     BD2: float
     Age: int
     Insurance: int
+    
+    
 
-
-
+    
 @app.get('/')
 def home():
-    return 'Hello' 
+    return { "FASTAPI to classify sepssis" }
 
 @app.get('/info')
-def appinfo():
-    return "info page"
+def info():
+    return 'App info page'
 
-@app.post('/predict_sepsis')
-def predict_sepssi(sepsis_features: SepsisFeatures):
-    
-    df = pd.DataFrame()
-    
-    prediction =pipeline.predict(df)[0]
-    
-    return {"prediction":prediction}
 
-@app.post('/hi')
-def create():
-    pass
+@app.post('/predict')
+def predict_sepssi(sepsis_features:SepsisFeatures):
+
+    df = pd.DataFrame([sepsis_features.model_dump()])
+    
+    prediction =pipeline.predict(df)
+    
+    ecoded_prediction= encoder.inverse_transform([prediction])[0]
+    
+    pred ={"prediction": ecoded_prediction }
+    return pred
+    
