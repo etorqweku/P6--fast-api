@@ -1,7 +1,6 @@
-# P6--Fast-API
+# P6--Fast-API :rocket:
 ## Fast API Project 
 
 The project is aimed to build and train a machine learning model to Classify Sepsis Patient based on the patient data. After that create an *API* using *FastAPI* and deploy to *Docker*. 
 
 
-:rocket: 
