@@ -7,4 +7,5 @@ The project is aimed to build and train a machine learning model to Classify Sep
 [Article link](#)
 
 
-[Deployed App ](#https://qwekuaryee-sepsis-api.hf.space/docs)
+[Deployed App](https://qwekuaryee-sepsis-api.hf.space/docs)
+
